@@ -38,7 +38,7 @@ Game (Node3D)
 ├── GameManager (Node)
 │   └── GameManager.gd
 └── UI (CanvasLayer)
-    └── HUD (Control)
+	└── HUD (Control)
 ```
 
 ---
@@ -120,24 +120,24 @@ var can_move := true
 # _ready() runs once when the node enters the scene tree
 # Similar to Start() in Unity
 func _ready():
-    print("Boat is ready!")
+	print("Boat is ready!")
 
 # _process(delta) runs every frame
 # delta is the time since last frame (use for smooth movement)
 func _process(delta):
-    if Input.is_action_just_pressed("ui_accept"):  # Space or Enter
-        print("Action button pressed!")
+	if Input.is_action_just_pressed("ui_accept"):  # Space or Enter
+		print("Action button pressed!")
 
 # _physics_process(delta) runs at fixed intervals (60 times/sec by default)
 # Use this for physics-related code
 func _physics_process(delta):
-    if not can_move:
-        return
-    
-    # Get input and apply movement
-    var forward = Input.get_axis("move_backward", "move_forward")
-    var movement = -transform.basis.z * forward * speed
-    apply_central_force(movement)
+	if not can_move:
+		return
+	
+	# Get input and apply movement
+	var forward = Input.get_axis("move_backward", "move_forward")
+	var movement = -transform.basis.z * forward * speed
+	apply_central_force(movement)
 ```
 
 Key syntax notes:
@@ -168,11 +168,11 @@ Godot uses an **Input Map** where you name actions and assign keys to them.
 ```gdscript
 # Check if action is currently held
 if Input.is_action_pressed("move_forward"):
-    # W is being held
+	# W is being held
 
 # Check if action was just pressed this frame
 if Input.is_action_just_pressed("jump"):
-    # Space was just pressed
+	# Space was just pressed
 
 # Get a value between -1 and 1 based on two actions
 var horizontal = Input.get_axis("move_left", "move_right")  # -1 to 1
@@ -194,11 +194,11 @@ Signals are how nodes communicate without being tightly coupled. When something 
 **Connecting signals in code:**
 ```gdscript
 func _ready():
-    # Connect the "body_entered" signal to our "_on_body_entered" function
-    body_entered.connect(_on_body_entered)
+	# Connect the "body_entered" signal to our "_on_body_entered" function
+	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body):
-    print("Something entered: ", body.name)
+	print("Something entered: ", body.name)
 ```
 
 **Creating custom signals:**
@@ -209,8 +209,8 @@ signal mouse_rescued(mouse)
 
 # Emit the signal when something happens
 func add_fuel(amount):
-    current_fuel += amount
-    fuel_changed.emit(current_fuel)  # Anyone listening will be notified
+	current_fuel += amount
+	fuel_changed.emit(current_fuel)  # Anyone listening will be notified
 ```
 
 ---
@@ -225,12 +225,12 @@ Use this when you want physics to control movement (gravity, forces, collisions 
 extends RigidBody3D
 
 func _physics_process(delta):
-    # Apply a force in the forward direction
-    var force = -transform.basis.z * 100
-    apply_central_force(force)
-    
-    # Apply torque (rotational force)
-    apply_torque(Vector3(0, 10, 0))
+	# Apply a force in the forward direction
+	var force = -transform.basis.z * 100
+	apply_central_force(force)
+	
+	# Apply torque (rotational force)
+	apply_torque(Vector3(0, 10, 0))
 ```
 
 Important RigidBody3D settings in Inspector:
@@ -247,12 +247,12 @@ Use this for triggers — detecting when something enters without physical colli
 extends Area3D
 
 func _ready():
-    body_entered.connect(_on_body_entered)
+	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body):
-    if body.is_in_group("player"):
-        print("Player entered the area!")
-        queue_free()  # Delete this node
+	if body.is_in_group("player"):
+		print("Player entered the area!")
+		queue_free()  # Delete this node
 ```
 
 ### Collision Layers and Masks
@@ -277,22 +277,22 @@ Groups are like tags. Add a node to a group to identify what it is.
 **Adding to a group (code):**
 ```gdscript
 func _ready():
-    add_to_group("enemies")
-    add_to_group("damageable")
+	add_to_group("enemies")
+	add_to_group("damageable")
 ```
 
 **Checking groups:**
 ```gdscript
 func _on_body_entered(body):
-    if body.is_in_group("player"):
-        collect()
+	if body.is_in_group("player"):
+		collect()
 ```
 
 **Finding all nodes in a group:**
 ```gdscript
 var all_mice = get_tree().get_nodes_in_group("mice")
 for mouse in all_mice:
-    print(mouse.name)
+	print(mouse.name)
 ```
 
 ---
@@ -313,16 +313,16 @@ for mouse in all_mice:
 const MouseScene = preload("res://scenes/mouse.tscn")
 
 func spawn_mouse():
-    # Create an instance
-    var mouse = MouseScene.instantiate()
-    
-    # Set its position
-    mouse.position = Vector3(randf_range(-20, 20), 0, randf_range(-20, 20))
-    
-    # Add it to the scene tree (makes it appear in the game)
-    add_child(mouse)
-    # Or add to a specific parent:
-    # get_node("SpawnContainer").add_child(mouse)
+	# Create an instance
+	var mouse = MouseScene.instantiate()
+	
+	# Set its position
+	mouse.position = Vector3(randf_range(-20, 20), 0, randf_range(-20, 20))
+	
+	# Add it to the scene tree (makes it appear in the game)
+	add_child(mouse)
+	# Or add to a specific parent:
+	# get_node("SpawnContainer").add_child(mouse)
 ```
 
 ### Deleting Nodes
@@ -366,9 +366,9 @@ UI in Godot uses **Control** nodes under a **CanvasLayer**.
 ```
 CanvasLayer
 └── Control (anchor: Full Rect)
-    ├── Label (for text)
-    ├── ProgressBar (for fuel gauge)
-    └── Button (for restart)
+	├── Label (for text)
+	├── ProgressBar (for fuel gauge)
+	└── Button (for restart)
 ```
 
 **Common Control nodes:**
@@ -384,10 +384,10 @@ CanvasLayer
 @onready var fuel_bar = $CanvasLayer/HUD/FuelBar
 
 func update_score(value):
-    score_label.text = "Score: " + str(value)
+	score_label.text = "Score: " + str(value)
 
 func update_fuel(percentage):
-    fuel_bar.value = percentage * 100  # ProgressBar uses 0-100
+	fuel_bar.value = percentage * 100  # ProgressBar uses 0-100
 ```
 
 **@onready**: Gets the node reference when `_ready()` runs. Cleaner than calling `get_node()` in `_ready()`.
@@ -403,13 +403,13 @@ func update_fuel(percentage):
 var spawn_timer = Timer.new()
 
 func _ready():
-    spawn_timer.wait_time = 3.0
-    spawn_timer.timeout.connect(_on_spawn_timer_timeout)
-    add_child(spawn_timer)
-    spawn_timer.start()
+	spawn_timer.wait_time = 3.0
+	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+	add_child(spawn_timer)
+	spawn_timer.start()
 
 func _on_spawn_timer_timeout():
-    spawn_mouse()
+	spawn_mouse()
 ```
 
 Or add a Timer node in the editor and connect its `timeout` signal.

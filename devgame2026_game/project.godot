@@ -14,6 +14,10 @@ config/name="DevGame2026"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[editor]
+
+version_control/autoload_on_startup=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
