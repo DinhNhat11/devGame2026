@@ -71,7 +71,7 @@ MouseRescue/
 ├── autoloads/
 │   └── game_manager.gd        (global singleton)
 └── resources/
-    └── (materials, etc.)
+	└── (materials, etc.)
 ```
 
 ---
