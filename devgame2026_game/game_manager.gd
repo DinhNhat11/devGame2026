@@ -248,16 +248,11 @@ func on_mouse_rescued(mouse: Node):
 	"""Called when a mouse is successfully rescued by the player."""
 
 	mice_rescued += 1
-
-	# Award cheese based on mouse type
-	var cheese = 1
-	if "cheese_reward" in mouse:
-		cheese = mouse.cheese_reward
-	cheese_collected += cheese
-	add_score(cheese * points_per_cheese)
+	cheese_collected += 5
+	add_score(5 * points_per_cheese)
 	mice_rescued_changed.emit(mice_rescued)
 
-	print("Mouse rescued! +", cheese, " cheese. Total rescued: ", mice_rescued)
+	print("Mouse rescued! +5 cheese. Total cheese: ", cheese_collected)
 
 func on_mouse_drowned(mouse: Node):
 	"""Called when a mouse drowns (timer ran out)."""
@@ -269,8 +264,8 @@ func on_cheese_collected(points: int):
 	"""Called when the player collects cheese."""
 	
 	cheese_collected += 1
-	add_score(points)
-	print("Cheese collected! Total: ", cheese_collected)
+	add_score(points_per_cheese)
+	print("Cheese collected! +1 cheese. Total cheese: ", cheese_collected)
 
 func on_player_fuel_depleted():
 	"""Called by the fuel system when the player runs out of fuel."""

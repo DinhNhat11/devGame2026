@@ -2,7 +2,7 @@
 # Attached to the MainWorld root node.
 # Starts the game when the scene loads.
 
-extends RigidBody3D
+extends Node3D
 
 func _ready():
 	GameManager.start_game()

@@ -1,6 +1,7 @@
-[gd_scene format=3 uid="uid://1e66sii78u4u"]
+[gd_scene format=3 uid="uid://bb1bskqshypuc"]
 
 [ext_resource type="Script" uid="uid://bnuavbdhykd1j" path="res://cheese_pickup.gd" id="1_oaiwv"]
+[ext_resource type="PackedScene" uid="uid://bw53gioos2meu" path="res://assets/just_cheese.glb" id="2_46kgj"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_46kgj"]
 
@@ -14,4 +15,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9955721, 0)
 mesh = SubResource("PrismMesh_46kgj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=162436496]
+transform = Transform3D(1.62, 0, 0, 0, 1.62, 0, 0, 0, 1.62, 0, 1.1431662, 0)
 shape = SubResource("BoxShape3D_oaiwv")
+
+[node name="Sketchfab_Scene" parent="." unique_id=1358293597 instance=ExtResource("2_46kgj")]
+transform = Transform3D(0.7, 0, 0, 0, -4.8082523e-08, 0.7, 0, -1.0999999, -3.059797e-08, 0, 1.3680427, 0.57567596)

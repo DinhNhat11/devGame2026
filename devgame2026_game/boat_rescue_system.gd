@@ -137,22 +137,18 @@ func _try_rescue_mouse(mouse_node: Node):
 	
 	# Rescue the mouse!
 	mouse.rescue()
-	rescued_mice.append(mouse)
-	
-	# Position the mouse on the boat
-	var slot_index = rescued_mice.size() - 1
-	var slot_position = _get_slot_position(slot_index)
-	_attach_mouse_to_boat(mouse, slot_position)
-	
-	# Notify listeners
-	mouse_rescued.emit(mouse)
-	capacity_changed.emit(get_current_count(), max_capacity)
-	
-	# Notify GameManager for scoring
+
+	# Notify GameManager for scoring (adds cheese based on mouse type)
 	if GameManager:
 		GameManager.on_mouse_rescued(mouse)
-	
-	print("Mouse rescued! ", get_current_count(), "/", max_capacity, " on board.")
+
+	# Notify listeners
+	mouse_rescued.emit(mouse)
+
+	print("Mouse rescued! +", mouse.cheese_reward, " cheese")
+
+	# Remove the mouse from the scene
+	mouse.queue_free()
 
 func _collect_cheese(cheese_node: Node):
 	"""Collects cheese and adds points to score."""
@@ -166,14 +162,17 @@ func _collect_cheese(cheese_node: Node):
 			push_warning("Detected cheese but couldn't find CheesePickup script!")
 			return
 	
-	# Collect and get points
-	var points = cheese.collect()
-	
-	# Notify GameManager
+	# Collect the cheese
+	cheese.collect()
+
+	# Notify GameManager (+1 cheese)
 	if GameManager:
-		GameManager.on_cheese_collected(points)
-	
-	print("Collected cheese worth ", points, " points!")
+		GameManager.on_cheese_collected(1)
+
+	# Remove the cheese from the scene
+	cheese.queue_free()
+
+	print("Collected cheese! +1 cheese")
 
 func _collect_booster(booster_node: Node):
 	"""Collects a fuel booster and adds fuel to the boat."""
