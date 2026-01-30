@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dcfa324ex50qb"
-path="res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"
+uid="uid://bw53gioos2meu"
+path="res://.godot/imported/just_cheese.glb-2fe1decc754f24ca7dc6888a350065f0.scn"
 
 [deps]
 
-source_file="res://plane_water_low.glb"
-dest_files=["res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"]
+source_file="res://assets/just_cheese.glb"
+dest_files=["res://.godot/imported/just_cheese.glb-2fe1decc754f24ca7dc6888a350065f0.scn"]
 
 [params]
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dcfa324ex50qb"
-path="res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"
+uid="uid://crcpn4iuf1ynf"
+path="res://.godot/imported/beach_island.glb-0a1d5d72d8a6b4c9ca7a1fdaed203fa4.scn"
 
 [deps]
 
-source_file="res://plane_water_low.glb"
-dest_files=["res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"]
+source_file="res://assets/beach_island.glb"
+dest_files=["res://.godot/imported/beach_island.glb-0a1d5d72d8a6b4c9ca7a1fdaed203fa4.scn"]
 
 [params]
 

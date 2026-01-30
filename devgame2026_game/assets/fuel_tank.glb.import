@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dcfa324ex50qb"
-path="res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"
+uid="uid://dkirnxls4jjko"
+path="res://.godot/imported/fuel_tank.glb-65b85d43aa7fba07985b92f456bd8690.scn"
 
 [deps]
 
-source_file="res://plane_water_low.glb"
-dest_files=["res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"]
+source_file="res://assets/fuel_tank.glb"
+dest_files=["res://.godot/imported/fuel_tank.glb-65b85d43aa7fba07985b92f456bd8690.scn"]
 
 [params]
 

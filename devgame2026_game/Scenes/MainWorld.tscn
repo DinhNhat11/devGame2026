@@ -1,50 +1,60 @@
-[gd_scene format=3 uid="uid://csjd6ahwb3bkp"]
+[gd_scene load_steps=9 format=3 uid="uid://cn1qovjbh7v6q"]
 
-[ext_resource type="Script" uid="uid://f0iqw8adh7sf" path="res://camera_follow.gd" id="1_7pr73"]
-[ext_resource type="PackedScene" uid="uid://d13jvgfle80mn" path="res://Scenes/boat.tscn" id="1_n3iha"]
+[ext_resource type="Script" path="res://camera_follow.gd" id="1_7pr73"]
+[ext_resource type="PackedScene" uid="uid://cvkvgqduxkt8i" path="res://Scenes/boat.tscn" id="1_n3iha"]
+[ext_resource type="PackedScene" uid="uid://ckwfm47qlm573" path="res://assets/cartoon_boat.glb" id="2_slf6q"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n3iha"]
-albedo_color = Color(0, 0.93774134, 0.93790156, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_j7nbv"]
-material = SubResource("StandardMaterial3D_n3iha")
-size = Vector2(100, 100)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_j7nbv"]
-size = Vector3(26.780212, 1, 2.4151382)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvdkm"]
+radius = 2.00157
+height = 5.0389
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n3iha"]
 
-[node name="MainWorld" type="RigidBody3D" unique_id=1944554242]
+[sub_resource type="PlaneMesh" id="PlaneMesh_3e1eq"]
+size = Vector2(100, 100)
 
-[node name="Boat" parent="." unique_id=524021251 instance=ExtResource("1_n3iha")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.73616, 0)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ixegn"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=55403864]
+[sub_resource type="BoxShape3D" id="BoxShape3D_xriv0"]
+size = Vector3(100, 0.5, 100)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=516149773]
-transform = Transform3D(0.99386096, -0.11063635, 0, 0.023731127, 0.21317986, 0.97672474, -0.10806126, -0.9707286, 0.21449666, 0, 10.365237, 0)
+[node name="MainWorld" type="RigidBody3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=443886961]
-mesh = SubResource("PlaneMesh_j7nbv")
+[node name="Boat" parent="." instance=ExtResource("1_n3iha")]
+transform = Transform3D(0.00991336, 0, 0.999951, 0, 1, 0, -0.999951, 0, 0.00991336, 0, 2.21658, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=5442606]
+[node name="Sketchfab_Scene" parent="Boat" instance=ExtResource("2_slf6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90735e-06, -2.21583, -2.43491)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1639020664]
-transform = Transform3D(4.005267, 0, 0, 0, 1, 0, 0, 0, 45.36614, 0.9229679, 0, 0.7626686)
-shape = SubResource("BoxShape3D_j7nbv")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Boat"]
+transform = Transform3D(-0.0245194, -0.999699, 0, 0.999699, -0.0245194, 0, 0, 0, 1, -0.388076, -0.0242195, 2.35887)
+shape = SubResource("CapsuleShape3D_wvdkm")
 
-[node name="Land" type="Area3D" parent="." unique_id=1864555059 groups=["land"]]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.993861, -0.110636, 0, 0.0237311, 0.21318, 0.976725, -0.108061, -0.970729, 0.214497, 0, 10.3652, 0)
+
+[node name="Land" type="Area3D" parent="." groups=["land"]]
 physics_interpolation_mode = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Land" unique_id=1722557082]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Land"]
 physics_interpolation_mode = 2
-transform = Transform3D(3.75976, 0, 0, 0, 2.3147326, 0, 0, 0, 1, 0, 4.912817, 2)
+transform = Transform3D(3.75976, 0, 0, 0, 2.31473, 0, 0, 0, 1, 0, 4.91282, 2)
 shape = SubResource("BoxShape3D_n3iha")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1576250949 node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0063424, 0)
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00634, 0)
 script = ExtResource("1_7pr73")
-target = NodePath("../Boat")
+target = NodePath("../Boat/CollisionShape3D2")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=326805000]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Water" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
+mesh = SubResource("PlaneMesh_3e1eq")
+surface_material_override/0 = SubResource("StandardMaterial3D_ixegn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water"]
+shape = SubResource("BoxShape3D_xriv0")

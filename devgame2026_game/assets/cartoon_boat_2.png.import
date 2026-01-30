@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds2owow7mok"
-path.s3tc="res://.godot/imported/blackrat_blackrat_normal.png-3e566333bf44f7894ec6e1c9993705dd.s3tc.ctex"
+uid="uid://cbqwwv4qp8jb0"
+path.s3tc="res://.godot/imported/cartoon_boat_2.png-981f133695b4e14fc545ead864aec17a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "67f45c1397b251aa67328755cda57c97"
+"md5": "4239ea54c05f6f0a1ed4caa0dff37107"
 }
 
 [deps]
 
-source_file="res://Scenes/blackrat_blackrat_normal.png"
-dest_files=["res://.godot/imported/blackrat_blackrat_normal.png-3e566333bf44f7894ec6e1c9993705dd.s3tc.ctex"]
+source_file="res://assets/cartoon_boat_2.png"
+dest_files=["res://.godot/imported/cartoon_boat_2.png-981f133695b4e14fc545ead864aec17a.s3tc.ctex"]
 
 [params]
 
@@ -28,7 +28,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://Scenes/blackrat_blackrat_normal.png"
+roughness/src_normal="res://assets/cartoon_boat_2.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

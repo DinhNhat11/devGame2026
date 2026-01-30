@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://d01m3oppnmu61"]
+[gd_scene load_steps=2 format=3 uid="uid://d01m3oppnmu61"]
 
 [ext_resource type="PackedScene" uid="uid://djyrc5ayiuf38" path="res://Scenes/blackrat.glb" id="1_77xw1"]
 

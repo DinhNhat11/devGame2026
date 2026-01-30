@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dcfa324ex50qb"
-path="res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"
+uid="uid://dgil7cpmmq6em"
+path="res://.godot/imported/cartoon_pixar_style_mousemickey-_mouse.glb-edf79d04fc1547c52ee028a689d86fad.scn"
 
 [deps]
 
-source_file="res://plane_water_low.glb"
-dest_files=["res://.godot/imported/plane_water_low.glb-be61dda84518677ea94ba4c34c34fea0.scn"]
+source_file="res://assets/cartoon_pixar_style_mousemickey-_mouse.glb"
+dest_files=["res://.godot/imported/cartoon_pixar_style_mousemickey-_mouse.glb-edf79d04fc1547c52ee028a689d86fad.scn"]
 
 [params]
 
