@@ -1,3 +1,62 @@
 [gd_scene format=3 uid="uid://bfgj7m4wrm0du"]
 
+<<<<<<< HEAD
 [node name="Main" type="Node3D"]
+=======
+[ext_resource type="PackedScene" uid="uid://djyrc5ayiuf38" path="res://Scenes/blackrat.glb" id="1_3i7qw"]
+[ext_resource type="Script" uid="uid://b7bdrgd3hrn5u" path="res://Scenes/node_3d.gd" id="2_cb5vv"]
+[ext_resource type="Script" uid="uid://bb1ia2ghpwcd" path="res://Scenes/camera_3d.gd" id="2_dqhuq"]
+[ext_resource type="PackedScene" uid="uid://dcfa324ex50qb" path="res://plane_water_low.glb" id="2_eqxjt"]
+[ext_resource type="Script" uid="uid://dy2dt24iqesmg" path="res://Scenes/node_3d_2.gd" id="4_j7xhf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v4ill"]
+radius = 5.57136
+height = 11.172
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bqenp"]
+size = Vector2(300, 301)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tv24t"]
+albedo_color = Color(0.381279, 0.644628, 0.97819, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_usrgb"]
+size = Vector3(300, 1, 300)
+
+[node name="Main" type="Node3D" unique_id=715314705]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1502260888]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=955544746]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.82359, 0)
+shape = SubResource("CapsuleShape3D_v4ill")
+
+[node name="blackrat" parent="CharacterBody3D" unique_id=953647722 instance=ExtResource("1_3i7qw")]
+transform = Transform3D(110, 0, 0, 0, 110, 0, 0, 0, 110, 0, 0, 0)
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=460348477]
+
+[node name="Sketchfab_Scene" parent="Ground" unique_id=1350122913 instance=ExtResource("2_eqxjt")]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 29.2647, 7.67279, 65.5879)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=960494134]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1167202, 0.15319061, -0.031597137)
+mesh = SubResource("PlaneMesh_bqenp")
+surface_material_override/0 = SubResource("StandardMaterial3D_tv24t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/MeshInstance3D" unique_id=471613349]
+shape = SubResource("BoxShape3D_usrgb")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1959088880 node_paths=PackedStringArray("target")]
+script = ExtResource("2_cb5vv")
+target = NodePath("../CharacterBody3D/blackrat")
+
+[node name="Camera3D" type="Camera3D" parent="Node3D" unique_id=1482932660 node_paths=PackedStringArray("target")]
+script = ExtResource("2_dqhuq")
+target = NodePath("../../CharacterBody3D/blackrat")
+offset = Vector3(0, 50, 100)
+
+[node name="Node3D2" type="Node3D" parent="." unique_id=1050750474]
+visible = false
+script = ExtResource("4_j7xhf")
+>>>>>>> 959f541b3bae963450e2b5cb95180a747a9878bc
