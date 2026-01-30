@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c06l6lyky02aq"]
+
+[ext_resource type="Script" uid="uid://dlww1mir7jbug" path="res://game_over_ui.gd" id="1_ojehl"]
+
+[node name="GameOver" type="Control" unique_id=167793256]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ojehl")

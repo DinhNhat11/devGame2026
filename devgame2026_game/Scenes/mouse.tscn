@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bflri6qjpaauw"]
+
+[ext_resource type="Script" uid="uid://cmwn0e4iqlfdm" path="res://mouse_controller.gd" id="1_dev0r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dev0r"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3ber4"]
+
+[node name="Mouse" type="Area3D" unique_id=1186744108]
+transform = Transform3D(1, 0, 0, 0, -0.049616743, -0.9987683, 0, 0.9987683, -0.049616743, 0, 0, 0)
+script = ExtResource("1_dev0r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1360933909]
+shape = SubResource("BoxShape3D_dev0r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1617968265]
+mesh = SubResource("CylinderMesh_3ber4")
