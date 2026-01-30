@@ -143,20 +143,20 @@ func _load_scenes():
 	# Attempt to load the scenes. These paths must match your project structure.
 	# If the files don't exist yet, that's okay - we'll check before spawning.
 	
-	if ResourceLoader.exists("res://scenes/mouse.tscn"):
-		mouse_scene = load("res://scenes/mouse.tscn")
+	if ResourceLoader.exists("res://Scenes/mouse.tscn"):
+		mouse_scene = load("res://Scenes/mouse.tscn")
 	else:
-		push_warning("Mouse scene not found at res://scenes/mouse.tscn")
-	
-	if ResourceLoader.exists("res://scenes/cheese.tscn"):
-		cheese_scene = load("res://scenes/cheese.tscn")
+		push_warning("Mouse scene not found at res://Scenes/mouse.tscn")
+
+	if ResourceLoader.exists("res://Scenes/cheese.tscn"):
+		cheese_scene = load("res://Scenes/cheese.tscn")
 	else:
-		push_warning("Cheese scene not found at res://scenes/cheese.tscn")
-	
-	if ResourceLoader.exists("res://scenes/fuel_booster.tscn"):
-		booster_scene = load("res://scenes/fuel_booster.tscn")
+		push_warning("Cheese scene not found at res://Scenes/cheese.tscn")
+
+	if ResourceLoader.exists("res://Scenes/FuelBooster.tscn"):
+		booster_scene = load("res://Scenes/FuelBooster.tscn")
 	else:
-		push_warning("Booster scene not found at res://scenes/fuel_booster.tscn")
+		push_warning("Booster scene not found at res://Scenes/FuelBooster.tscn")
 
 # === GAME FLOW METHODS ===
 
@@ -246,12 +246,18 @@ func add_score(points: int):
 
 func on_mouse_rescued(mouse: Node):
 	"""Called when a mouse is successfully rescued by the player."""
-	
+
 	mice_rescued += 1
-	add_score(points_per_mouse)
+
+	# Award cheese based on mouse type
+	var cheese = 1
+	if "cheese_reward" in mouse:
+		cheese = mouse.cheese_reward
+	cheese_collected += cheese
+	add_score(cheese * points_per_cheese)
 	mice_rescued_changed.emit(mice_rescued)
-	
-	print("Mouse rescued! Total: ", mice_rescued)
+
+	print("Mouse rescued! +", cheese, " cheese. Total rescued: ", mice_rescued)
 
 func on_mouse_drowned(mouse: Node):
 	"""Called when a mouse drowns (timer ran out)."""
@@ -299,13 +305,23 @@ func _spawn_mouse():
 	var spawn_pos = _get_random_spawn_position()
 	var mouse = mouse_scene.instantiate()
 	mouse.position = spawn_pos
-	
+
+	# Weighted random type: Little 2x, Skinny 1x, Fat 0.5x
+	# Total weight = 3.5 → Little ~57%, Skinny ~29%, Fat ~14%
+	var roll = randf()
+	if roll < 0.571:
+		mouse.mouse_type = mouse.MouseType.LITTLE
+	elif roll < 0.857:
+		mouse.mouse_type = mouse.MouseType.SKINNY
+	else:
+		mouse.mouse_type = mouse.MouseType.FAT
+
 	# Connect to mouse signals so we know when it's rescued or drowns
 	if mouse.has_signal("rescued"):
 		mouse.rescued.connect(on_mouse_rescued)
 	if mouse.has_signal("drowned"):
 		mouse.drowned.connect(on_mouse_drowned)
-	
+
 	# Add to the game scene
 	game_scene.add_child(mouse)
 

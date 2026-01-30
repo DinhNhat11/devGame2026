@@ -18,6 +18,16 @@
 
 extends Area3D
 
+# === MOUSE TYPES ===
+# Priority system: Fat mice give more cheese but drown faster
+enum MouseType { LITTLE, SKINNY, FAT }
+
+const MOUSE_DATA = {
+	MouseType.LITTLE: { "time": 30.0, "cheese": 1, "scale": 0.6 },
+	MouseType.SKINNY: { "time": 18.0, "cheese": 2, "scale": 0.8 },
+	MouseType.FAT:    { "time": 8.0,  "cheese": 5, "scale": 1.2 },
+}
+
 # === SIGNALS ===
 # GameManager and scoring system connect to these
 
@@ -26,8 +36,12 @@ signal drowned(mouse: Node)
 
 # === CONFIGURATION ===
 
+@export_group("Mouse Type")
+@export var mouse_type: MouseType = MouseType.LITTLE
+var cheese_reward: int = 1
+
 @export_group("Drowning")
-@export var max_drowning_time: float = 10.0  # Seconds until drowning
+@export var max_drowning_time: float = 10.0  # Overridden by mouse_type in _ready()
 
 @export_group("Visual Feedback")
 @export var safe_color: Color = Color(0.2, 0.8, 0.2)      # Green
@@ -67,7 +81,13 @@ func is_available_for_rescue() -> bool:
 func _ready():
 	# Add to mouse group for detection
 	add_to_group("mouse")
-	
+
+	# Apply mouse type data
+	var data = MOUSE_DATA[mouse_type]
+	max_drowning_time = data["time"]
+	cheese_reward = data["cheese"]
+	scale = Vector3.ONE * data["scale"]
+
 	# Initialize timer
 	current_time = max_drowning_time
 	

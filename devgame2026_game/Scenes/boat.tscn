@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cvkvgqduxkt8i"]
+[gd_scene format=3 uid="uid://cvkvgqduxkt8i"]
 
 [ext_resource type="Script" path="res://boat_controller.gd" id="1_g7r5y"]
 [ext_resource type="Script" path="res://fuel_system.gd" id="2_badgh"]
