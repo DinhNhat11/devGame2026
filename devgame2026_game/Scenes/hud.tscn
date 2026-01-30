@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bhos74bqm41ka"]
+
+[ext_resource type="Script" uid="uid://fi38rexgemop" path="res://hud_controller.gd" id="1_e0onf"]
+
+[node name="Hud" type="Control" unique_id=2001050588 node_paths=PackedStringArray("score_label", "timer_label", "mice_rescued_label", "capacity_label", "fuel_bar")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_e0onf")
+score_label = NodePath("CheeseLabel")
+timer_label = NodePath("TimerLabel")
+mice_rescued_label = NodePath("MiceRescuedLabel")
+capacity_label = NodePath("CapacityLabel")
+fuel_bar = NodePath("FuelBar")
+
+[node name="CheeseLabel" type="Label" parent="." unique_id=1151714896]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Cheese: 0
+"
+
+[node name="TimerLabel" type="Label" parent="." unique_id=740173545]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Time: 0"
+
+[node name="MiceRescuedLabel" type="Label" parent="." unique_id=1985084326]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Mice: 0"
+
+[node name="CapacityLabel" type="Label" parent="." unique_id=1788902272]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Capacity: "
+
+[node name="FuelBar" type="ProgressBar" parent="." unique_id=1317968962]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0

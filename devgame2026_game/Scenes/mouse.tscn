@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cuubnlxatungt"]
+
+[ext_resource type="Script" uid="uid://cmwn0e4iqlfdm" path="res://mouse_controller.gd" id="1_dev0r"]
+[ext_resource type="PackedScene" uid="uid://dgil7cpmmq6em" path="res://assets/cartoon_pixar_style_mousemickey-_mouse.glb" id="2_3ber4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dev0r"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3ber4"]
+
+[node name="Mouse" type="Area3D" unique_id=1186744108]
+transform = Transform3D(1, 0, 0, 0, -0.049616743, -0.9987683, 0, 0.9987683, -0.049616743, 0, 0, 0)
+script = ExtResource("1_dev0r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1360933909]
+transform = Transform3D(2.905, 0, 0, 0, 2.905, 8.657575e-09, 0, -8.657575e-09, 2.905, 0, -0.026147122, -0.52633274)
+shape = SubResource("BoxShape3D_dev0r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1617968265]
+mesh = SubResource("CylinderMesh_3ber4")
+
+[node name="Sketchfab_Scene" parent="." unique_id=1301262137 instance=ExtResource("2_3ber4")]
+transform = Transform3D(-2.1855695e-07, 0, 5, 0, 5, 0, -5, 0, -2.1855695e-07, 0, 0, 0)

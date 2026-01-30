@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scoreboard.gd" id="1_score"]
+
+[node name="ScoreboardLayer" type="CanvasLayer"]
+layer = 10
+
+[node name="Scoreboard" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+script = ExtResource("1_score")

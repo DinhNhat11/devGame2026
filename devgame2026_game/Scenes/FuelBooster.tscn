@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://d0avy4jvwis4"]
+
+[ext_resource type="Script" uid="uid://c0rgehpvjh3rx" path="res://fuel_booster.gd" id="1_xvn0l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xvn0l"]
+
+[node name="FuelBooster" type="Area3D" unique_id=1209505235]
+script = ExtResource("1_xvn0l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=624612309]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=468050285]
+shape = SubResource("BoxShape3D_xvn0l")

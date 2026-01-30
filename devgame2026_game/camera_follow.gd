@@ -1,136 +1,152 @@
-# camera_follow.gd
-# A smooth third-person camera that follows the player's boat.
-# Attach this script to a Camera3D node in your game scene.
+extends Node3D
+# Mouse-Look Camera with Character Rotation
+# The camera rotates with mouse movement AND the character turns to face where you're looking
 #
 # Setup:
-# 1. Add a Camera3D to your game scene
-# 2. Attach this script to it
-# 3. In the Inspector, assign the target (your Boat node)
-# 4. Adjust the offset and smoothing values to taste
+# 1. Add Node3D to scene, name it "CameraRig"
+# 2. Add Camera3D as child of CameraRig
+# 3. Attach this script to CameraRig
+# 4. Drag your character into Target field in Inspector
 #
-# The camera will smoothly follow behind and above the target,
-# always looking at where the boat is heading.
-
-extends Camera3D
+# Structure:
+# Character (CharacterBody3D)
+# CameraRig (Node3D)          ← This script
+# └── Camera3D
 
 # === CONFIGURATION ===
 
 @export_group("Target")
-@export var target: Node3D  # Drag your Boat node here in the Inspector
+@export var target: Node3D  # Your character
 
-@export_group("Position")
-@export var distance_behind: float = 12.0  # How far behind the target
-@export var height_above: float = 6.0      # How far above the target
-@export var look_ahead: float = 5.0        # How far ahead of target to look
+@export_group("Camera Settings")
+@export var camera_distance: float = 30.0
+@export var camera_height: float = 10.0
+@export var follow_speed: float = 10.0
 
-@export_group("Smoothing")
-@export var follow_speed: float = 5.0      # How fast camera catches up (higher = snappier)
-@export var rotation_speed: float = 8.0    # How fast camera rotates to face target
+@export_group("Mouse Look")
+@export var mouse_sensitivity: float = 0.3
+@export var invert_y: bool = false
+
+@export_group("Camera Limits")
+@export var min_pitch: float = -60.0  # How far down
+@export var max_pitch: float = 60.0   # How far up
+
+@export_group("Character Rotation")
+@export var rotate_character: bool = true  # Turn character with mouse
+@export var character_rotation_speed: float = 10.0
 
 # === STATE ===
 
-var current_velocity: Vector3 = Vector3.ZERO  # Used for smooth damping
+var yaw: float = 0.0    # Left/right rotation
+var pitch: float = 0.0  # Up/down rotation
+var camera_node: Camera3D
 
 # === GODOT LIFECYCLE ===
 
 func _ready():
-	# If no target assigned, try to find one
-	if target == null:
-		_find_target()
+	# Find camera
+	camera_node = get_node_or_null("Camera3D")
+	if not camera_node:
+		for child in get_children():
+			if child is Camera3D:
+				camera_node = child
+				break
 	
-	if target:
-		# Snap to initial position immediately
-		snap_to_target()
-		print("Camera following: ", target.name)
-	else:
-		push_warning("CameraFollow: No target assigned! Drag your Boat into the Target field.")
-
-func _physics_process(delta: float):
-	# Use _physics_process for smoother following of physics objects
-	if target == null:
+	if not camera_node:
+		push_error("No Camera3D found!")
 		return
 	
-	_follow_target(delta)
-	_look_at_target(delta)
+	# Position camera
+	camera_node.position = Vector3(0, camera_height, camera_distance)
+	
+	# Capture mouse
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	# Auto-find target
+	if not target:
+		var players = get_tree().get_nodes_in_group("player")
+		if players.size() > 0:
+			target = players[0]
+			print("Camera: Found target - ", target.name)
+	
+	if not target:
+		push_warning("No target set! Drag character into Inspector.")
+	
+	print("Mouse-look camera ready! Press ESC to release mouse.")
 
-# === CAMERA MOVEMENT ===
+func _input(event):
+	# Mouse look
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if event is InputEventMouseMotion:
+			_handle_mouse_look(event.relative)
+	
+	# Toggle mouse capture
+	if event.is_action_pressed("ui_cancel"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-func _follow_target(delta: float):
-	"""Smoothly moves the camera to follow behind the target."""
+func _process(delta):
+	if not target:
+		return
 	
-	# Calculate the desired position:
-	# Behind the target (opposite of where it's facing) and above
+	# Follow target position
+	global_position = global_position.lerp(target.global_position, follow_speed * delta)
 	
-	# Get the target's forward direction
-	# In Godot, -Z is typically forward, so -transform.basis.z points forward
-	var target_forward = -target.transform.basis.z
+	# Apply camera rotation
+	rotation_degrees.x = pitch
+	rotation_degrees.y = yaw
 	
-	# Calculate offset: behind and above
-	var behind_offset = -target_forward * distance_behind
-	var height_offset = Vector3.UP * height_above
-	
-	var desired_position = target.global_position + behind_offset + height_offset
-	
-	# Smoothly interpolate to the desired position
-	# lerp = linear interpolation: moves a fraction of the way each frame
-	global_position = global_position.lerp(desired_position, follow_speed * delta)
-	
-	# Alternative: use move_toward for constant-speed following
-	# global_position = global_position.move_toward(desired_position, follow_speed * delta)
+	# Rotate character to match camera yaw
+	if rotate_character and target:
+		_rotate_character(delta)
 
-func _look_at_target(delta: float):
-	"""Smoothly rotates the camera to look at the target."""
+# === MOUSE LOOK ===
+
+func _handle_mouse_look(mouse_delta: Vector2):
+	# Horizontal (yaw)
+	yaw -= mouse_delta.x * mouse_sensitivity
 	
-	# Calculate a look-ahead point
-	# This makes the camera lead the target slightly for better game feel
-	var look_at_point = target.global_position
+	# Vertical (pitch)
+	var pitch_delta = mouse_delta.y * mouse_sensitivity
+	if invert_y:
+		pitch_delta = -pitch_delta
+	pitch -= pitch_delta
 	
-	# If target is moving, look slightly ahead of it
-	if target is RigidBody3D:
-		var velocity = target.linear_velocity
-		if velocity.length() > 0.5:
-			look_at_point += velocity.normalized() * look_ahead
+	# Clamp pitch
+	pitch = clamp(pitch, min_pitch, max_pitch)
+
+# === CHARACTER ROTATION ===
+
+func _rotate_character(delta: float):
+	"""Makes character turn to face the camera's direction."""
 	
-	# Calculate the direction to look at
-	var direction_to_target = look_at_point - global_position
+	# Get the camera's forward direction on the XZ plane
+	var camera_forward = -global_transform.basis.z
+	camera_forward.y = 0
+	camera_forward = camera_forward.normalized()
 	
-	if direction_to_target.length() < 0.01:
-		return  # Avoid issues when very close
+	if camera_forward.length() < 0.1:
+		return
 	
-	# Calculate the target rotation
-	var target_rotation = Transform3D().looking_at(direction_to_target, Vector3.UP).basis.get_euler()
+	# Calculate target rotation
+	var target_rotation = atan2(camera_forward.x, camera_forward.z)
 	
-	# Smoothly interpolate rotation
-	rotation.x = lerp_angle(rotation.x, target_rotation.x, rotation_speed * delta)
-	rotation.y = lerp_angle(rotation.y, target_rotation.y, rotation_speed * delta)
-	# Usually we don't want roll (z rotation) on a follow camera
-	rotation.z = lerp_angle(rotation.z, 0, rotation_speed * delta)
+	# Smoothly rotate character
+	var current_rotation = target.rotation.y
+	var new_rotation = lerp_angle(current_rotation, target_rotation, character_rotation_speed * delta)
+	target.rotation.y = new_rotation
 
 # === PUBLIC METHODS ===
 
-func set_target(new_target: Node3D):
-	"""Changes the camera's target at runtime."""
-	target = new_target
-	if target:
-		snap_to_target()
+func set_distance(distance: float):
+	"""Change camera distance."""
+	camera_distance = distance
+	if camera_node:
+		camera_node.position.z = distance
 
-func snap_to_target():
-	"""Instantly moves the camera to its ideal position. Call after teleporting the target."""
-	
-	if target == null:
-		return
-	
-	var target_forward = -target.transform.basis.z
-	var behind_offset = -target_forward * distance_behind
-	var height_offset = Vector3.UP * height_above
-	
-	global_position = target.global_position + behind_offset + height_offset
-	look_at(target.global_position)
-
-func _find_target():
-	"""Attempts to automatically find a target in the player group."""
-	
-	var players = get_tree().get_nodes_in_group("player")
-	if players.size() > 0:
-		target = players[0]
-		print("CameraFollow: Auto-found target in 'player' group")
+func reset_rotation():
+	"""Reset camera to default position."""
+	yaw = 0
+	pitch = 0
