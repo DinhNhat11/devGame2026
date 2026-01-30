@@ -1,8 +1,5 @@
 [gd_scene format=3 uid="uid://bfgj7m4wrm0du"]
 
-<<<<<<< HEAD
-[node name="Main" type="Node3D"]
-=======
 [ext_resource type="PackedScene" uid="uid://djyrc5ayiuf38" path="res://Scenes/blackrat.glb" id="1_3i7qw"]
 [ext_resource type="Script" uid="uid://b7bdrgd3hrn5u" path="res://Scenes/node_3d.gd" id="2_cb5vv"]
 [ext_resource type="Script" uid="uid://bb1ia2ghpwcd" path="res://Scenes/camera_3d.gd" id="2_dqhuq"]
@@ -59,4 +56,3 @@ offset = Vector3(0, 50, 100)
 [node name="Node3D2" type="Node3D" parent="." unique_id=1050750474]
 visible = false
 script = ExtResource("4_j7xhf")
->>>>>>> 959f541b3bae963450e2b5cb95180a747a9878bc

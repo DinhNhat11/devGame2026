@@ -1,68 +1,73 @@
-[gd_scene format=3 uid="uid://dp7jj5vy2xk2l"]
+[gd_scene load_steps=13 format=3 uid="uid://dp7jj5vy2xk2l"]
 
 [ext_resource type="Script" path="res://main_world.gd" id="1_mwscr"]
-[ext_resource type="Script" path="res://camera_follow.gd" id="1_7pr73"]
-[ext_resource type="PackedScene" path="res://Scenes/boat.tscn" id="1_n3iha"]
+[ext_resource type="PackedScene" uid="uid://cvkvgqduxkt8i" path="res://Scenes/boat.tscn" id="1_n3iha"]
 [ext_resource type="PackedScene" uid="uid://ckwfm47qlm573" path="res://assets/cartoon_boat.glb" id="2_slf6q"]
-[ext_resource type="PackedScene" path="res://Scenes/scoreboard.tscn" id="4_e7o1y"]
-[ext_resource type="PackedScene" path="res://Scenes/minimap.tscn" id="5_30tqi"]
+[ext_resource type="PackedScene" uid="uid://crcpn4iuf1ynf" path="res://assets/beach_island.glb" id="4_j75mv"]
+[ext_resource type="Script" path="res://Scenes/camera_3d.gd" id="4_r1p0n"]
+[ext_resource type="PackedScene" path="res://Scenes/scoreboard.tscn" id="5_score"]
+[ext_resource type="PackedScene" path="res://Scenes/minimap.tscn" id="6_mmap"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvdkm"]
-radius = 2.00157
-height = 5.0389
+radius = 1.52475
+height = 3.65764
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n3iha"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3e1eq"]
-size = Vector2(100, 100)
+size = Vector2(1000, 1000)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ixegn"]
+albedo_color = Color(0.306764, 0.489388, 0.903592, 1)
+anisotropy_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xriv0"]
-size = Vector3(100, 0.5, 100)
+size = Vector3(1000, 0.5, 1000)
 
-[node name="MainWorld" type="RigidBody3D" unique_id=676778806]
+[node name="MainWorld" type="RigidBody3D"]
 script = ExtResource("1_mwscr")
 
-[node name="Boat" parent="." unique_id=946289197 instance=ExtResource("1_n3iha")]
+[node name="Boat" parent="." instance=ExtResource("1_n3iha")]
 transform = Transform3D(0.00991336, 0, 0.999951, 0, 1, 0, -0.999951, 0, 0.00991336, 0, 2.21658, 0)
 
-[node name="Sketchfab_Scene" parent="Boat" unique_id=2037787000 instance=ExtResource("2_slf6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90735e-06, -2.21583, -2.43491)
+[node name="Sketchfab_Scene" parent="Boat" instance=ExtResource("2_slf6q")]
+transform = Transform3D(-0.0472285, 0, 0.998884, 0, 1, 0, -0.998884, 0, -0.0472285, -3.71768, -2.21583, -2.39805)
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Boat" unique_id=1338465790]
-transform = Transform3D(-0.0245194, -0.999699, 0, 0.999699, -0.0245194, 0, 0, 0, 1, -0.388076, -0.0242195, 2.35887)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Boat"]
+transform = Transform3D(-0.0245194, -0.999699, -2.79397e-09, 0.999699, -0.0245194, 0, -4.36557e-11, -2.79397e-09, 1, 1.09927, -0.0242195, -2.18229)
 shape = SubResource("CapsuleShape3D_wvdkm")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=296414373]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1868136992]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.993861, -0.110636, 0, 0.0237311, 0.21318, 0.976725, -0.108061, -0.970729, 0.214497, 0, 10.3652, 0)
 
-[node name="Land" type="Area3D" parent="." unique_id=447918906 groups=["land"]]
+[node name="Land" type="Area3D" parent="." groups=["land"]]
 physics_interpolation_mode = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Land" unique_id=927912883]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Land"]
 physics_interpolation_mode = 2
 transform = Transform3D(3.75976, 0, 0, 0, 2.31473, 0, 0, 0, 1, 0, 4.91282, 2)
 shape = SubResource("BoxShape3D_n3iha")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=269901792 node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00634, 0)
-script = ExtResource("1_7pr73")
-target = NodePath("../Boat/CollisionShape3D2")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1330875229]
+[node name="Water" type="StaticBody3D" parent="."]
 
-[node name="Water" type="StaticBody3D" parent="." unique_id=670952636]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Water" unique_id=569815460]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
 mesh = SubResource("PlaneMesh_3e1eq")
 surface_material_override/0 = SubResource("StandardMaterial3D_ixegn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Water" unique_id=1830170841]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water"]
 shape = SubResource("BoxShape3D_xriv0")
 
-[node name="ScoreboardLayer" parent="." unique_id=1114680884 instance=ExtResource("4_e7o1y")]
+[node name="beach_island" parent="." instance=ExtResource("4_j75mv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -9.017, 0, -349.502)
 
-[node name="MinimapLayer" parent="." unique_id=755997830 instance=ExtResource("5_30tqi")]
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("4_r1p0n")
+target = NodePath("../Boat/CollisionShape3D2")
+
+[node name="ScoreboardLayer" parent="." instance=ExtResource("5_score")]
+
+[node name="MinimapLayer" parent="." instance=ExtResource("6_mmap")]
