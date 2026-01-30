@@ -69,8 +69,6 @@ var booster_spawn_timer: Timer
 # Reference to the main game scene (set when game starts)
 var game_scene: Node = null
 
-# Background music
-var music_player: AudioStreamPlayer
 
 # === COMPUTED PROPERTIES ===
 # GDScript doesn't have C#-style properties, but we can use functions
@@ -88,7 +86,6 @@ func _ready():
 	
 	_create_spawn_timers()
 	_load_scenes()
-	_setup_music()
 
 	print("GameManager initialized!")
 
@@ -107,14 +104,6 @@ func _process(delta: float):
 		end_game("Time's Up!")
 
 # === SETUP METHODS ===
-
-func _setup_music():
-	music_player = AudioStreamPlayer.new()
-	music_player.stream = preload("res://audio/background.mp3")
-	music_player.volume_db = -10
-	music_player.autoplay = true
-	add_child(music_player)
-	music_player.finished.connect(func(): music_player.play())
 
 func _create_spawn_timers():
 	# Create timer nodes and add them as children of the GameManager
