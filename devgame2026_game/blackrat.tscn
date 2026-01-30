@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://d01m3oppnmu61"]
+
+[ext_resource type="PackedScene" uid="uid://djyrc5ayiuf38" path="res://Scenes/blackrat.glb" id="1_77xw1"]
+
+[node name="blackrat" instance=ExtResource("1_77xw1")]

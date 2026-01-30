@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbwcg8c2i8aya"]
+
+[ext_resource type="Script" path="res://about.gd" id="1_30ymq"]
+[ext_resource type="Texture2D" uid="uid://bglg2pgq7orqv" path="res://assets/mousecheese.webp" id="2_q6ayg"]
+[ext_resource type="Texture2D" uid="uid://cp7u7c2teky7y" path="res://assets/drowning.png" id="3_3mf5b"]
+
+[node name="about" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_30ymq")
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 524.0
+offset_top = 518.0
+offset_right = 631.0
+offset_bottom = 570.0
+text = "Back"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 31.0
+offset_right = 896.0
+offset_bottom = 351.0
+text = "																		ABOUT
+
+A single-player mouse rescue game where you control a boat, save drowning mice, 
+collect cheese for points, and manage your fuel. The game has a 5-minute timer 
+and tracks your final score.
+
+HOW TO PLAY:
+* Direction keys for movement
+* Drowning mice will be saved when you collide with them
+* Collect more cheese to get more points!
+* Have fun!"
+
+[node name="Mousecheese" type="Sprite2D" parent="."]
+position = Vector2(921, 466)
+scale = Vector2(0.219388, 0.219388)
+texture = ExtResource("2_q6ayg")
+
+[node name="Drowning" type="Sprite2D" parent="."]
+position = Vector2(283, 453.75)
+scale = Vector2(0.1875, 0.167917)
+texture = ExtResource("3_3mf5b")
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
