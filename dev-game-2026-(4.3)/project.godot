@@ -14,14 +14,9 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="DevGame2026"
-run/main_scene="uid://csjd6ahwb3bkp"
+config/name="DevGame2026 (4.3)"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
-
-[autoload]
-
-GameManager="*uid://r5f6xg2o5p4g"
 
 [editor]
 

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://d13jvgfle80mn"]
+
+[ext_resource type="Script" uid="uid://bt1oug0f6uf8r" path="res://boat_controller.gd" id="1_g7r5y"]
+[ext_resource type="Script" uid="uid://bmef5elaqmg7o" path="res://fuel_system.gd" id="2_badgh"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_g7r5y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7r5y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_badgh"]
+
+[node name="Boat" type="RigidBody3D" unique_id=524021251 groups=["player"]]
+script = ExtResource("1_g7r5y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=71289909]
+transform = Transform3D(1, 0, 0, 0, -0.99963975, 0.02683993, 0, -0.02683993, -0.99963975, 0, 0.32521272, 0)
+mesh = SubResource("PlaneMesh_g7r5y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1955372265]
+shape = SubResource("BoxShape3D_g7r5y")
+
+[node name="RescueArea" type="Area3D" parent="." unique_id=1032160597]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RescueArea" unique_id=476187966]
+shape = SubResource("BoxShape3D_badgh")
+
+[node name="FuelSystem" type="Node3D" parent="." unique_id=951253499]
+script = ExtResource("2_badgh")

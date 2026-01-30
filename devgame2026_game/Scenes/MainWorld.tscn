@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://csjd6ahwb3bkp"]
+
+[ext_resource type="Script" uid="uid://f0iqw8adh7sf" path="res://camera_follow.gd" id="1_7pr73"]
+[ext_resource type="PackedScene" uid="uid://d13jvgfle80mn" path="res://Scenes/boat.tscn" id="1_n3iha"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n3iha"]
+albedo_color = Color(0, 0.93774134, 0.93790156, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j7nbv"]
+material = SubResource("StandardMaterial3D_n3iha")
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j7nbv"]
+size = Vector3(26.780212, 1, 2.4151382)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n3iha"]
+
+[node name="MainWorld" type="RigidBody3D" unique_id=1944554242]
+
+[node name="Boat" parent="." unique_id=524021251 instance=ExtResource("1_n3iha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.73616, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=55403864]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=516149773]
+transform = Transform3D(0.99386096, -0.11063635, 0, 0.023731127, 0.21317986, 0.97672474, -0.10806126, -0.9707286, 0.21449666, 0, 10.365237, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=443886961]
+mesh = SubResource("PlaneMesh_j7nbv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=5442606]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1639020664]
+transform = Transform3D(4.005267, 0, 0, 0, 1, 0, 0, 0, 45.36614, 0.9229679, 0, 0.7626686)
+shape = SubResource("BoxShape3D_j7nbv")
+
+[node name="Land" type="Area3D" parent="." unique_id=1864555059 groups=["land"]]
+physics_interpolation_mode = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Land" unique_id=1722557082]
+physics_interpolation_mode = 2
+transform = Transform3D(3.75976, 0, 0, 0, 2.3147326, 0, 0, 0, 1, 0, 4.912817, 2)
+shape = SubResource("BoxShape3D_n3iha")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1576250949 node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0063424, 0)
+script = ExtResource("1_7pr73")
+target = NodePath("../Boat")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=326805000]
